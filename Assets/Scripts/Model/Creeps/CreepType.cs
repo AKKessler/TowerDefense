@@ -1,0 +1,1 @@
+﻿public enum CreepType : int { Basic = 0, Fast = 1 };

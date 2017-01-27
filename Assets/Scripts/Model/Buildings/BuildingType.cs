@@ -1,0 +1,1 @@
+﻿public enum BuildingType : int { Wall1x1=1, Wall2x2=2, Wall2x1=3, Wall1x2=4 };

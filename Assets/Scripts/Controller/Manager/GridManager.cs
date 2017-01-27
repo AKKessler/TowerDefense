@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class GridManager : MonoBehaviour {
 
@@ -10,11 +9,12 @@ public class GridManager : MonoBehaviour {
 
     public Texture tileTexture;
     public Texture tileTextureAndOverlay;
+    
+    public bool showOverlay;
 
-    GameObject ground;
-    Grid grid;
-    float width, length;
-    bool showOverlay;
+    private GameObject ground;
+    private Grid grid;
+    private float width, length;
     
     void Start () {
         length = numRows;
@@ -30,13 +30,8 @@ public class GridManager : MonoBehaviour {
 
         grid = new Grid(numRows, numColumns, width, length);
 	}
-
-    public Vector3 getCenterAt(int row, int col)
-    {
-        return grid.getCenterAt(row, col);
-    }
-
-    public Vector3 getCenterAt2(Building building, int row, int col)
+    
+    public Vector3 getCenterAt(Building building, int row, int col)
     {
         Vector3 average = Vector3.zero;
         for(int i = 0; i < building.length; i++)

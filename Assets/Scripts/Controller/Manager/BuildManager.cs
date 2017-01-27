@@ -7,15 +7,15 @@ public class BuildManager
     private readonly static Color PREVIEW_GREEN = new Color(0.0f, 1.0f, 0.0f, PREVIEW_OPACITY);
     private readonly static Vector3 PREVIEW_OFFSET = new Vector3(0.0f, 0.69f, 0.0f);
 
-    GridManager gridManager;
+    private GridManager gridManager;
 
-    bool buildMode;
+    private bool buildMode;
 
-    bool buildMenu;
+    private bool buildMenu;
 
-    BuildingType currentBuildingType;
+    private BuildingType currentBuildingType;
 
-    GameObject preview;
+    private GameObject preview;
 
 
     public BuildManager(GridManager gridManager)
@@ -31,10 +31,9 @@ public class BuildManager
     {
         updateBuildingPreview();
         handleInput();
-
     }
 
-    void handleInput()
+    private void handleInput()
     {
 
         if (buildMenu) {
@@ -62,7 +61,7 @@ public class BuildManager
         }
     }
 
-    void updateBuildingPreview()
+    private void updateBuildingPreview()
     {
         if (!buildMode || buildMenu) return;
 
@@ -73,60 +72,36 @@ public class BuildManager
         if (plane.Raycast(ray, out distance))
         {
             GameObject buildingPrefab = BuildingFactory.getBuildingPrefab(currentBuildingType);
-            if (preview == null)
-            {
-                preview = Object.Instantiate(buildingPrefab, PREVIEW_OFFSET, Quaternion.identity) as GameObject;
-                Object.Destroy(preview.GetComponent<NavMeshObstacle>());
-            }
+
+            createPreview(buildingPrefab);
 
             Vector3 intersect = ray.GetPoint(distance);
             int row = Mathf.FloorToInt(intersect.x);
             int col = Mathf.FloorToInt(intersect.z);
-            if (gridManager.canBuildAt(buildingPrefab, row, col))
-            {
+            if (gridManager.canBuildAt(buildingPrefab, row, col)) {
+                Vector3 center = gridManager.getCenterAt(buildingPrefab.GetComponent<Building>(), row, col);
+                preview.transform.position = center + PREVIEW_OFFSET;
                 previewColor = PREVIEW_GREEN;
             }
-            else
-            {
+            else {
                 previewColor = PREVIEW_RED;
             }
 
             Renderer renderer = preview.GetComponent<Renderer>();
             renderer.material.color = previewColor;
-
-            Vector3 center = gridManager.getCenterAt2(buildingPrefab.GetComponent<Building>(), row, col);
-            if (center != Vector3.zero)
-            {
-                preview.transform.position = center + PREVIEW_OFFSET;
-            }
         }
     }
 
-    public void enterBuildMode()
+    private void createPreview(GameObject buildingPrefab)
     {
-        buildMode = true;
-        buildMenu = true;
+        if (preview == null)
+        {
+            preview = Object.Instantiate(buildingPrefab, PREVIEW_OFFSET, Quaternion.identity) as GameObject;
+            Object.Destroy(preview.GetComponent<NavMeshObstacle>());
+        }
     }
 
-    public void exitBuildMode()
-    {
-        buildMode = false;
-        buildMenu = false;
-        Object.Destroy(preview);
-    }
-
-    public bool inBuildMode()
-    {
-        return buildMode;
-    }
-
-    void selectBuildingType(BuildingType type)
-    {
-        currentBuildingType = type;
-        buildMenu = false;
-    }
-
-    bool buildAtMouse()
+    private bool buildAtMouse()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane plane = new Plane(Vector3.up, Vector3.zero);
@@ -141,5 +116,33 @@ public class BuildManager
             }
         }
         return false;
+    }
+
+    private void selectBuildingType(BuildingType type)
+    {
+        currentBuildingType = type;
+        buildMenu = false;
+    }
+
+    public void enterBuildMode()
+    {
+        buildMode = true;
+        buildMenu = true;
+    }
+
+    public void exitBuildMode()
+    {
+        buildMode = false;
+        buildMenu = false;
+
+        if (preview != null)
+        {
+            Object.Destroy(preview);
+        }
+    }
+
+    public bool inBuildMode()
+    {
+        return buildMode;
     }
 }

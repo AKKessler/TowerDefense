@@ -42,18 +42,12 @@ public class Grid {
         }
     }
 
-    public void setObjectAt(GameObject gameObject, int row, int col)
+    // This function does not assume can build object at given row,col pair.
+    public bool setObjectAt(GameObject gameObject, int row, int col)
     {
-        if (areValidCoords(row, col))
-        {
-            Tile tile = tiles[row, col];
-            tile.setGameObject(gameObject);
-        }
-    }
+        Building building = gameObject.GetComponent<Building>();
+        if (building == null) return false;
 
-    public bool setObjectAt2(Building building, int row, int col)
-    {
-        GameObject gameObject = building.gameObject;
         ArrayList tilesToModify = new ArrayList();
         for (int i = 0; i < building.length; i++)
         {
@@ -78,6 +72,7 @@ public class Grid {
         }
         float towerArea = building.length * building.width;
         gameObject.transform.position = centerAverage / towerArea;
+
         return true;
     }
 

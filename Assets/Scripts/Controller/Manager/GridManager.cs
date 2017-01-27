@@ -50,32 +50,27 @@ public class GridManager : MonoBehaviour {
         return average / towerArea;
     }
 
-    public bool createObjectAt(Building building, int row, int col)
+    public bool placeBuildingAt(GameObject building, int row, int col)
     {
-        if (canBuildAt(building, row, col))
-        {
-            //Transform tf = Instantiate(building.prefab, ORIGIN_OFFSET, Quaternion.identity) as Transform;
-            //tf.parent = this.transform;
-            //GameObject go = tf.gameObject;
-            GameObject go = Instantiate(building.prefab, ORIGIN_OFFSET, Quaternion.identity) as GameObject;
-            go.transform.parent = ground.transform;
-            building.setGameObject(go);
-            return grid.setObjectAt2(building, row, col);
-        }
-        return false;
+        return grid.setObjectAt(building, row, col);
     }
 
-    public bool canBuildAt(Building building, int row, int col)
+    public bool canBuildAt(GameObject gameObject, int row, int col)
     {
-        bool canBuild = true;
+        Building building = gameObject.GetComponent<Building>();
+        if (building == null) return false;
+
         for (int i = 0; i < building.length; i++)
         {
-            for(int j = 0; j < building.width; j++)
+            for (int j = 0; j < building.width; j++)
             {
-                canBuild &= grid.canBuildAt(row + i, col + j);
+                if (!grid.canBuildAt(row + i, col + j))
+                {
+                    return false;
+                }
             }
         }
-        return canBuild;
+        return true;
     }
 
     public void toggleOverlay()

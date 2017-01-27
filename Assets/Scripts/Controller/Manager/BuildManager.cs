@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class BuildManager
 {
@@ -15,12 +14,17 @@ public class BuildManager
     bool buildMenu;
 
     BuildingType currentBuildingType;
-    GameObject selectedObject;
+
+    GameObject preview;
 
 
     public BuildManager(GridManager gridManager)
     {
         this.gridManager = gridManager;
+
+        buildMode = false;
+        buildMenu = false;
+        preview = null;
     }
 
     public void update()
@@ -68,17 +72,17 @@ public class BuildManager
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (plane.Raycast(ray, out distance))
         {
-            Building building = BuildingFactory.createBuilding(currentBuildingType);
-            if (selectedObject == null)
+            GameObject buildingPrefab = BuildingFactory.getBuildingPrefab(currentBuildingType);
+            if (preview == null)
             {
-                selectedObject = Object.Instantiate(building.prefab, PREVIEW_OFFSET, Quaternion.identity) as GameObject;
-                Object.Destroy(selectedObject.GetComponent<NavMeshObstacle>());
+                preview = Object.Instantiate(buildingPrefab, PREVIEW_OFFSET, Quaternion.identity) as GameObject;
+                Object.Destroy(preview.GetComponent<NavMeshObstacle>());
             }
 
             Vector3 intersect = ray.GetPoint(distance);
             int row = Mathf.FloorToInt(intersect.x);
             int col = Mathf.FloorToInt(intersect.z);
-            if (gridManager.canBuildAt(building, row, col))
+            if (gridManager.canBuildAt(buildingPrefab, row, col))
             {
                 previewColor = PREVIEW_GREEN;
             }
@@ -87,13 +91,13 @@ public class BuildManager
                 previewColor = PREVIEW_RED;
             }
 
-            Renderer renderer = selectedObject.GetComponent<Renderer>();
+            Renderer renderer = preview.GetComponent<Renderer>();
             renderer.material.color = previewColor;
 
-            Vector3 center = gridManager.getCenterAt2(building, row, col);
+            Vector3 center = gridManager.getCenterAt2(buildingPrefab.GetComponent<Building>(), row, col);
             if (center != Vector3.zero)
             {
-                selectedObject.transform.position = center + PREVIEW_OFFSET;
+                preview.transform.position = center + PREVIEW_OFFSET;
             }
         }
     }
@@ -108,7 +112,7 @@ public class BuildManager
     {
         buildMode = false;
         buildMenu = false;
-        Object.Destroy(selectedObject);
+        Object.Destroy(preview);
     }
 
     public bool inBuildMode()
@@ -132,7 +136,9 @@ public class BuildManager
             Vector3 intersect = ray.GetPoint(distance);
             int row = Mathf.FloorToInt(intersect.x);
             int col = Mathf.FloorToInt(intersect.z);
-            return gridManager.createObjectAt(BuildingFactory.createBuilding(currentBuildingType), row, col);
+            if(gridManager.canBuildAt(BuildingFactory.getBuildingPrefab(currentBuildingType), row, col)) {
+                return gridManager.placeBuildingAt(BuildingFactory.createBuilding(currentBuildingType), row, col);
+            }
         }
         return false;
     }

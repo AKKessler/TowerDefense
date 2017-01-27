@@ -1,20 +1,18 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public abstract class Building
-{
-    public Object prefab;
-    public int width;
-    public int length;
-    public int height;
+public class Building : MonoBehaviour {
 
-    //public Transform projectilePrefab;
-    //public Transform target;
-    
-    public GameObject gameObject;
+    public int width = 1;
+    public int length = 1;
+    public int height = 1;
 
-    public void setGameObject(GameObject gameObject)
+    private void Start()
     {
-        this.gameObject = gameObject;
+
+    }
+
+    private void Update()
+    {
+
     }
 }

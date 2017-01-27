@@ -8,9 +8,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject selectedObject;
     
-    public GameObject waypoints;
-
-    private Transform start, finish;
+    public Transform[] waypoints;
 
     private WaveManager waveManager;
 
@@ -21,11 +19,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         gridManager = gridObject.GetComponent<GridManager>();
-
-        waypoints = GameObject.Find("Waypoints");
-        start = waypoints.transform.Find("Start");
-        finish = waypoints.transform.Find("Finish");
-        waveManager = new WaveManager(start, finish);
+        
+        waveManager = new WaveManager(waypoints);
 
         buildManager = new BuildManager(gridManager);
     }

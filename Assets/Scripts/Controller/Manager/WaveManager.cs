@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class WaveManager {
 
-    Transform start, finish;
+    Transform[] waypoints;
 
     List<GameObject> spawnedCreeps;
 
@@ -11,11 +11,10 @@ public class WaveManager {
 
     bool waveInProgress;
 
-    public WaveManager(Transform start, Transform finish)
+    public WaveManager(Transform[] waypoints)
     {
         spawnedCreeps = new List<GameObject>();
-        this.start = start;
-        this.finish = finish;
+        this.waypoints = waypoints;
 
         waveInProgress = false;
         currentCreepType = CreepType.Basic;
@@ -33,7 +32,9 @@ public class WaveManager {
 
     public void spawnCreep()
     {
-        spawnedCreeps.Add(CreepFactory.createCreep(currentCreepType, start, finish));
+        GameObject creep = CreepFactory.createCreep(currentCreepType);
+        creep.GetComponent<Creep>().setWaypoints(waypoints);
+        spawnedCreeps.Add(creep);
     }
 
     public void nextWave()

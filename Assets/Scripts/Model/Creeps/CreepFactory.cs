@@ -5,7 +5,7 @@ public class CreepFactory {
     public readonly static GameObject BASIC_CREEP_PREFAB = (GameObject) Resources.Load("Prefabs/BasicCreep");
     public readonly static GameObject FAST_CREEP_PREFAB = (GameObject) Resources.Load("Prefabs/FastCreep");
     
-    public static GameObject createCreep(CreepType type, Transform spawn, Transform destination)
+    public static GameObject createCreep(CreepType type)
     {
         GameObject prefab = null;
         switch (type)
@@ -17,9 +17,7 @@ public class CreepFactory {
                 prefab = FAST_CREEP_PREFAB;
                 break;
         }
-        GameObject creep = Object.Instantiate(prefab, spawn.position, Quaternion.identity) as GameObject;
-        NavMeshAgent agent = creep.GetComponent<NavMeshAgent>();
-        agent.SetDestination(destination.position);
+        GameObject creep = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity) as GameObject;
         return creep;
     }
 }

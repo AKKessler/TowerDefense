@@ -1,20 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Creep {
+public class Creep : MonoBehaviour {
     
-    GameObject creep;
+    public float health;
 
-    protected float health;
-
-	public Creep(Object prefab, Transform spawn, Transform destination) {
-        creep = Object.Instantiate(prefab, spawn.position, Quaternion.identity) as GameObject;
-        setDestination(destination);
-    }
-	
-    public void setDestination(Transform destination)
+    private void Start()
     {
-        NavMeshAgent agent = creep.GetComponent<NavMeshAgent>();
-        agent.SetDestination(destination.position);
+
+    }
+
+    private void Update()
+    {
+
     }
 }

@@ -5,7 +5,7 @@ public class WaveManager {
 
     Transform start, finish;
 
-    List<Creep> spawnedCreeps;
+    List<GameObject> spawnedCreeps;
 
     CreepType currentCreepType;
 
@@ -13,7 +13,7 @@ public class WaveManager {
 
     public WaveManager(Transform start, Transform finish)
     {
-        spawnedCreeps = new List<Creep>();
+        spawnedCreeps = new List<GameObject>();
         this.start = start;
         this.finish = finish;
 
@@ -24,7 +24,6 @@ public class WaveManager {
     public void startNextWave()
     {
         waveInProgress = true;
-
     }
 
     public bool isWaveInProgress()

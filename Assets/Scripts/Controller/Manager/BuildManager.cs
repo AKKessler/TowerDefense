@@ -27,6 +27,15 @@ public class BuildManager
         preview = null;
     }
 
+    public BuildManager(GridManager gridManager , Transform[] waypoints)
+    {
+        this.gridManager = gridManager;
+
+        buildMode = false;
+        buildMenu = false;
+        preview = null;
+    }
+
     public void update()
     {
         updateBuildingPreview();
@@ -78,14 +87,17 @@ public class BuildManager
             Vector3 intersect = ray.GetPoint(distance);
             int row = Mathf.FloorToInt(intersect.x);
             int col = Mathf.FloorToInt(intersect.z);
-            if (gridManager.canBuildAt(buildingPrefab, row, col)) {
-                Vector3 center = gridManager.getCenterAt(buildingPrefab.GetComponent<Building>(), row, col);
-                preview.transform.position = center + PREVIEW_OFFSET;
+            if (gridManager.canBuildAt(buildingPrefab, row, col))
+            {
                 previewColor = PREVIEW_GREEN;
             }
-            else {
+            else
+            {
                 previewColor = PREVIEW_RED;
             }
+            Vector3 center = gridManager.getCenterAt(buildingPrefab.GetComponent<Building>(), row, col);
+            if(center != Vector3.zero)
+                preview.transform.position = center + PREVIEW_OFFSET;
 
             Renderer renderer = preview.GetComponent<Renderer>();
             renderer.material.color = previewColor;
@@ -97,7 +109,10 @@ public class BuildManager
         if (preview == null)
         {
             preview = Object.Instantiate(buildingPrefab, PREVIEW_OFFSET, Quaternion.identity) as GameObject;
-            Object.Destroy(preview.GetComponent<NavMeshObstacle>());
+            preview.name = "Preview";
+            preview.GetComponent<NavMeshObstacle>().enabled = false;
+            preview.transform.parent = gridManager.transform;
+            //Object.Destroy(preview.GetComponent<NavMeshObstacle>());
         }
     }
 
@@ -111,8 +126,11 @@ public class BuildManager
             Vector3 intersect = ray.GetPoint(distance);
             int row = Mathf.FloorToInt(intersect.x);
             int col = Mathf.FloorToInt(intersect.z);
-            if(gridManager.canBuildAt(BuildingFactory.getBuildingPrefab(currentBuildingType), row, col)) {
+            GameObject prefab = BuildingFactory.getBuildingPrefab(currentBuildingType);
+            if(gridManager.canBuildAt(prefab, row, col)) {
+                //if (!gridManager.wouldBlockPathAt(prefab, row, col)) {
                 return gridManager.placeBuildingAt(BuildingFactory.createBuilding(currentBuildingType), row, col);
+                //}
             }
         }
         return false;

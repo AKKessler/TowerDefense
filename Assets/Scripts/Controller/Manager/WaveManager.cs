@@ -2,20 +2,16 @@
 using System.Collections.Generic;
 
 public class WaveManager {
-
-    Transform[] waypoints;
-
+    
     List<GameObject> spawnedCreeps;
 
     CreepType currentCreepType;
 
     bool waveInProgress;
 
-    public WaveManager(Transform[] waypoints)
+    public WaveManager()
     {
         spawnedCreeps = new List<GameObject>();
-        this.waypoints = waypoints;
-
         waveInProgress = false;
         currentCreepType = CreepType.Basic;
     }
@@ -33,7 +29,7 @@ public class WaveManager {
     public void spawnCreep()
     {
         GameObject creep = CreepFactory.createCreep(currentCreepType);
-        creep.GetComponent<Creep>().setWaypoints(waypoints);
+        creep.GetComponent<Creep>().setWaypoints(WaypointUtility.getWaypoints());
         spawnedCreeps.Add(creep);
     }
 

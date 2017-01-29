@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class GridManager : MonoBehaviour {
 
@@ -29,6 +30,7 @@ public class GridManager : MonoBehaviour {
         renderer.material.mainTextureScale = new Vector2(length, width);
 
         grid = new Grid(numRows, numColumns, width, length);
+        addWaypoints();
 	}
     
     public Vector3 getCenterAt(Building building, int row, int col)
@@ -67,6 +69,43 @@ public class GridManager : MonoBehaviour {
         }
         return true;
     }
+    
+    //public bool wouldBlockPathAt(GameObject prefab, int row, int col)
+    //{
+    //    bool wouldBlock = false;
+    //    Vector3 center = getCenterAt(prefab.GetComponent<Building>(), row, col);
+    //    //GameObject g = Instantiate(prefab, center, Quaternion.identity) as GameObject;
+    //    //g.GetComponent<MeshRenderer>().enabled = false;
+    //    //GameObject g = transform.Find("foo").gameObject;
+    //    //g.transform.position = center;
+    //    //NavMeshObstacle obstacle = g.GetComponent<NavMeshObstacle>();
+    //    GameObject g = transform.Find("Preview").gameObject;
+    //    NavMeshObstacle obstacle = g.GetComponent<NavMeshObstacle>();
+    //    obstacle.enabled = true;
+
+    //    GameObject anticheat = transform.Find("Anticheat").gameObject;
+    //    NavMeshAgent anticheatAgent = anticheat.GetComponent<NavMeshAgent>();
+    //    Transform[] waypoints = WaypointUtility.getWaypoints();
+    //    for(int i = 0; i < waypoints.Length - 1; i++)
+    //    {
+    //        NavMeshPath path = new NavMeshPath();
+    //        anticheatAgent.Warp(waypoints[i].position);
+    //        anticheatAgent.CalculatePath(waypoints[i + 1].position, path);
+    //        if(path.status == NavMeshPathStatus.PathPartial)
+    //        {
+    //            Debug.Log(string.Format("Complete path not found between waypoints " + i + " and " + (i+1)));
+    //            wouldBlock = true;
+    //            break;
+    //        }
+            
+    //    }
+
+    //    obstacle.enabled = false;
+    //    //g.transform.position = new Vector3(-5, 0, 5);
+    //    //Destroy(g);
+
+    //    return wouldBlock;
+    //}
 
     public void toggleOverlay()
     {
@@ -84,5 +123,20 @@ public class GridManager : MonoBehaviour {
         }
         renderer.material.mainTexture = currentTexture;
     }
-   
+
+    void addWaypoints()
+    {
+        List<Transform> waypoints = new List<Transform>();
+        for(int i=0; i<2; i++)
+        {
+            for(int j=0; j<2; j++)
+            {
+                GameObject waypoint = Instantiate(WaypointUtility.WAYPOINT_PREFAB, Vector3.zero, Quaternion.identity) as GameObject;
+                waypoint.name = "Waypoint" + i + j;
+                waypoints.Add(waypoint.transform);
+                grid.setObjectAt(waypoint, i * (numRows-1), j * (numColumns-1));
+            }
+        }
+        WaypointUtility.setWaypoints(waypoints.ToArray());
+    }
 }

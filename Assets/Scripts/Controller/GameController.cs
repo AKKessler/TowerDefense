@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class GameController : MonoBehaviour
 {
     private const string SELECTABLE_TAG = "Selectable";
 
     public GameObject gridObject;
 
     public GameObject selectedObject;
-    
-    public Transform[] waypoints;
 
     private WaveManager waveManager;
 
@@ -19,10 +17,10 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         gridManager = gridObject.GetComponent<GridManager>();
-        
-        waveManager = new WaveManager(waypoints);
 
         buildManager = new BuildManager(gridManager);
+
+        waveManager = new WaveManager();
     }
     
     void Update()

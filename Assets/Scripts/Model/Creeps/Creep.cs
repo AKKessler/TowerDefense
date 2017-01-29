@@ -17,7 +17,10 @@ public class Creep : MonoBehaviour {
 
     private void Update()
     {
-        if(agent.remainingDistance <= agent.stoppingDistance)
+        float distance = Vector3.Distance(transform.position, waypoints[currentWaypoint].position);
+        // some type of race condition makes this true when it's not?
+        //if(agent.remainingDistance <= agent.stoppingDistance) 
+        if (distance < 0.5f)
         {
             currentWaypoint++;
             if (currentWaypoint == waypoints.Length)
@@ -26,7 +29,10 @@ public class Creep : MonoBehaviour {
             }
             else
             {
-                agent.SetDestination(waypoints[currentWaypoint].position);
+                // is there a difference between these two ways?
+                //agent.SetDestination(waypoints[currentWaypoint].position);
+                agent.destination = waypoints[currentWaypoint].position;
+
             }
         }
     }

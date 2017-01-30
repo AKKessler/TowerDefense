@@ -5,9 +5,10 @@ public class Tile {
 
     GameObject gameObject;
 
-    bool isBuildable; // if object is on then is not buildable? also consider tile types.
+    bool isBuildable;
     bool isWalkable;
 
+    public int row, col;
     float x, z;
     float width, length;
     
@@ -29,10 +30,6 @@ public class Tile {
     public void setGameObject(GameObject gameObject)
     {
         this.gameObject = gameObject;
-
-        // TODO Consider if any scaling needs to be done to gameObject
-
-        // this.gameObject.transform.Translate(getCenter3());
     }
 
     public GameObject getGameObject()

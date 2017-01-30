@@ -49,7 +49,12 @@ public class GridManager : MonoBehaviour {
 
     public bool placeBuildingAt(GameObject building, int row, int col)
     {
-        return grid.setObjectAt(building, row, col);
+        bool placed = grid.setObjectAt(building, row, col);
+        if(placed)
+        {
+            grid.calculateCostMaps();
+        }
+        return placed;
     }
 
     public bool canBuildAt(GameObject gameObject, int row, int col)
@@ -69,43 +74,6 @@ public class GridManager : MonoBehaviour {
         }
         return true;
     }
-    
-    //public bool wouldBlockPathAt(GameObject prefab, int row, int col)
-    //{
-    //    bool wouldBlock = false;
-    //    Vector3 center = getCenterAt(prefab.GetComponent<Building>(), row, col);
-    //    //GameObject g = Instantiate(prefab, center, Quaternion.identity) as GameObject;
-    //    //g.GetComponent<MeshRenderer>().enabled = false;
-    //    //GameObject g = transform.Find("foo").gameObject;
-    //    //g.transform.position = center;
-    //    //NavMeshObstacle obstacle = g.GetComponent<NavMeshObstacle>();
-    //    GameObject g = transform.Find("Preview").gameObject;
-    //    NavMeshObstacle obstacle = g.GetComponent<NavMeshObstacle>();
-    //    obstacle.enabled = true;
-
-    //    GameObject anticheat = transform.Find("Anticheat").gameObject;
-    //    NavMeshAgent anticheatAgent = anticheat.GetComponent<NavMeshAgent>();
-    //    Transform[] waypoints = WaypointUtility.getWaypoints();
-    //    for(int i = 0; i < waypoints.Length - 1; i++)
-    //    {
-    //        NavMeshPath path = new NavMeshPath();
-    //        anticheatAgent.Warp(waypoints[i].position);
-    //        anticheatAgent.CalculatePath(waypoints[i + 1].position, path);
-    //        if(path.status == NavMeshPathStatus.PathPartial)
-    //        {
-    //            Debug.Log(string.Format("Complete path not found between waypoints " + i + " and " + (i+1)));
-    //            wouldBlock = true;
-    //            break;
-    //        }
-            
-    //    }
-
-    //    obstacle.enabled = false;
-    //    //g.transform.position = new Vector3(-5, 0, 5);
-    //    //Destroy(g);
-
-    //    return wouldBlock;
-    //}
 
     public void toggleOverlay()
     {

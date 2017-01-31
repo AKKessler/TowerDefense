@@ -112,7 +112,6 @@ public class BuildManager
             preview.name = "Preview";
             preview.GetComponent<NavMeshObstacle>().enabled = false;
             preview.transform.parent = gridManager.transform;
-            //Object.Destroy(preview.GetComponent<NavMeshObstacle>());
         }
     }
 

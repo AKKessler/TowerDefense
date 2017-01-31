@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 public class WaveManager {
     
-    List<GameObject> spawnedCreeps;
-
     CreepType currentCreepType;
 
     bool waveInProgress;
 
+    GameObject creepContainer;
+
     public WaveManager()
     {
-        spawnedCreeps = new List<GameObject>();
         waveInProgress = false;
         currentCreepType = CreepType.Basic;
+        creepContainer = GameObject.Find("Creeps");
     }
 
     public void startNextWave()
@@ -23,14 +23,13 @@ public class WaveManager {
 
     public bool isWaveInProgress()
     {
-        return waveInProgress = spawnedCreeps.Count != 0;
+        return waveInProgress = creepContainer.GetComponents<Transform>().Length != 0; // TODO ensure array doesn't contain its own Transform 
     }
 
     public void spawnCreep()
     {
         GameObject creep = CreepFactory.createCreep(currentCreepType);
-        creep.GetComponent<Creep>().setWaypoints(WaypointUtility.getWaypoints());
-        spawnedCreeps.Add(creep);
+        creep.transform.parent = creepContainer.transform;
     }
 
     public void nextWave()

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class Grid {
+public class Grid
+{
 
     public int rows;
     public int cols;
@@ -35,7 +36,7 @@ public class Grid {
             {
 
                 float x = i * tileLength;
-                float z = (j+1) * tileWidth;
+                float z = (j + 1) * tileWidth;
                 Tile tile = new Tile(x, z, tileWidth, tileLength, isBuildable, isWalkable);
                 tile.row = i;
                 tile.col = j;
@@ -65,7 +66,7 @@ public class Grid {
                 }
             }
         }
-    
+
         Vector3 centerAverage = Vector3.zero;
         foreach (Tile tile in tilesToModify)
         {
@@ -86,7 +87,7 @@ public class Grid {
 
     public bool canBuildAt(int row, int col)
     {
-        if(areValidCoords(row, col))
+        if (areValidCoords(row, col))
         {
             return tiles[row, col].getIsBuildable() && tiles[row, col].getGameObject() == null;
         }
@@ -95,12 +96,12 @@ public class Grid {
 
     public bool canWalkAt(int row, int col)
     {
-        if(areValidCoords(row, col))
+        if (areValidCoords(row, col))
         {
             Tile t = tiles[row, col];
             bool walkable = t.getIsWalkable();
             GameObject g = t.getGameObject();
-            if(g != null && !g.GetComponent<Building>().walkable)
+            if (g != null && !g.GetComponent<Building>().walkable)
             {
                 walkable = false;
             }
@@ -115,7 +116,7 @@ public class Grid {
         bool validCol = (0 <= col) && (col < cols);
         return validRow && validCol;
     }
-    
+
     public Vector3 getCenterAt(int row, int col)
     {
         if (areValidCoords(row, col))
@@ -125,46 +126,30 @@ public class Grid {
         return Vector3.zero;
     }
 
-    public int[,] calculateCostMaps()
+    public int[,] calculateCostMap(int endRow, int endCol)
     {
-        Transform[] waypoints = WaypointUtility.getWaypoints();
-        List<int[,]> costList = new List<int[,]>();
-        foreach (Transform waypoint in waypoints)
+        int[,] costMap = initializeNewCostMap();
+        List<Tile> visitQueue = new List<Tile>();
+        visitQueue.Add(tiles[endRow, endCol]); // start BFS from goal tile
+        costMap[endRow, endCol] = 0; // goal has distance cost 0
+
+        while (visitQueue.Count > 0)
         {
-            int[,] costMap = initializeNewCostMap();
-
-            Vector3 endPoint = waypoint.position; 
-            int endRow = Mathf.FloorToInt(endPoint.x);
-            int endCol = Mathf.FloorToInt(endPoint.z);
-
-            List<Tile> visitQueue = new List<Tile>();
-            visitQueue.Add(tiles[endRow, endCol]); // start BFS from goal tile
-            costMap[endRow, endCol] = 0; // goal has distance cost 0
-
-            while (visitQueue.Count > 0)
+            Tile currTile = visitQueue[0];
+            int currCost = costMap[currTile.row, currTile.col];
+            visitQueue.RemoveAt(0);
+            foreach (Tile adjTile in getAdjacentTiles(currTile.row, currTile.col))
             {
-                Tile currTile = visitQueue[0];
-                int currCost = costMap[currTile.row, currTile.col];
-                visitQueue.RemoveAt(0);
-                foreach (Tile adjTile in getAdjacentTiles(currTile.row, currTile.col))
+                int nextCost = costMap[adjTile.row, adjTile.col];
+                if (nextCost == -1 || nextCost > currCost + 1)
                 {
-                    int nextCost = costMap[adjTile.row, adjTile.col];
-                    if (nextCost == -1 || nextCost > currCost + 1)
-                    {
-                        costMap[adjTile.row, adjTile.col] = currCost + 1;
-                        visitQueue.Add(adjTile);
-                    }
+                    costMap[adjTile.row, adjTile.col] = currCost + 1;
+                    visitQueue.Add(adjTile);
                 }
             }
-            costList.Add(costMap);
         }
-        
-        for (int w = 0; w < costList.Count; w++)
-        {
-            // TODO figure out how to print to stdout since Unity console is not in a monospace font, 
-            Debug.Log("Waypoint" + w + "'s cost map:\n" + costMapToString(costList[w]));
-        }
-        return null; // TODO determine how costMaps will be accessed;
+        Debug.Log(costMapToString(costMap));
+        return costMap;
     }
 
     private int[,] initializeNewCostMap()
@@ -174,27 +159,28 @@ public class Grid {
         {
             for (int j = 0; j < cols; j++)
             {
-                map[i, j] = -1;
+                map[i, j] = -1; // TODO set to arbitrarily large number/infinity instead?
             }
         }
         return map;
     }
 
-    private List<Tile> getAdjacentTiles(int row, int col) {
+    private List<Tile> getAdjacentTiles(int row, int col)
+    {
         List<Tile> adjacentTiles = new List<Tile>();
-        int[,] coords = { 
-            {row+1, col}, 
-            {row-1, col}, 
-            {row, col+1}, 
+        int[,] coords = {
+            {row+1, col},
+            {row-1, col},
+            {row, col+1},
             {row, col-1}
         };
-        for(int i=0; i<coords.GetLength(0); i++)
+        for (int i = 0; i < coords.GetLength(0); i++)
         {
-            for(int j=0; j<coords.GetLength(1); j++)
+            for (int j = 0; j < coords.GetLength(1); j++)
             {
                 int r = coords[i, 0];
                 int c = coords[i, 1];
-                if(canWalkAt(r,c))
+                if (canWalkAt(r, c))
                 {
                     adjacentTiles.Add(tiles[r, c]);
                 }

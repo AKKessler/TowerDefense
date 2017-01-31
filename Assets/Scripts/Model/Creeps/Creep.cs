@@ -1,52 +1,51 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class Creep : MonoBehaviour {
-
-    public Transform[] waypoints;
-
+    
     public int currentWaypoint;
 
     public float health;
 
-    private NavMeshAgent agent;
+    public float speed;
+
+    private List<Vector3> path; // get this as a queue/something with .pop() method?
+
+    private Vector3 dest;
 
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        currentWaypoint = 1;
+        transform.position = WaypointUtility.getWaypoint(0).position;
+        path = WaypointUtility.getShortestPath(transform, currentWaypoint);
+        dest = path[0];
+        path.RemoveAt(0);
     }
 
     private void Update()
     {
-        float distance = Vector3.Distance(transform.position, waypoints[currentWaypoint].position);
-        // some type of race condition makes this true when it's not?
-        //if(agent.remainingDistance <= agent.stoppingDistance) 
-        if (distance < 0.5f)
+        float distance = Vector3.Distance(transform.position, dest);
+        if(distance < 0.1f)
         {
-            currentWaypoint++;
-            if (currentWaypoint == waypoints.Length)
+            if(path.Count == 0)
             {
-                Destroy(gameObject);
+                if(++currentWaypoint >= WaypointUtility.waypointCount())
+                {
+                    Destroy(gameObject); // TODO Consider handling destroy logic elsewhere? Collider trigger?
+                    return; // TODO does code stop execution upon Destroy? Putting return statement to be safe...
+                }
+                path = WaypointUtility.getShortestPath(transform, currentWaypoint);
             }
-            else
-            {
-                // is there a difference between these two ways?
-                //agent.SetDestination(waypoints[currentWaypoint].position);
-                agent.destination = waypoints[currentWaypoint].position;
-
-            }
+            dest = path[0];
+            path.RemoveAt(0);
         }
+        transform.position = Vector3.Slerp(transform.position, dest, Time.deltaTime * speed);
     }
 
-    // Currently is an issue where local agent variable is not yet set? 
-    // Meaning this is called before Start() function.
-    public void setWaypoints(Transform[] waypoints)
+    public void updatePath()
     {
-        if (waypoints.Length >= 2)
-        {
-            this.waypoints = waypoints;
-            this.currentWaypoint = 0;
-            NavMeshAgent agent = GetComponent<NavMeshAgent>();
-            agent.Warp(this.waypoints[currentWaypoint].position);
-        }
+        path = WaypointUtility.getShortestPath(transform, currentWaypoint);
+        dest = path[0];
+        path.RemoveAt(0);
     }
 }

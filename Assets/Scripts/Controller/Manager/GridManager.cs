@@ -52,7 +52,7 @@ public class GridManager : MonoBehaviour {
         bool placed = grid.setObjectAt(building, row, col);
         if(placed)
         {
-            grid.calculateCostMaps();
+            WaypointUtility.updateCostMaps(grid);
         }
         return placed;
     }
@@ -106,5 +106,6 @@ public class GridManager : MonoBehaviour {
             }
         }
         WaypointUtility.setWaypoints(waypoints.ToArray());
+        WaypointUtility.updateCostMaps(grid);
     }
 }

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Waypoint
   - Selectable
+  - Ground
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Ground
+  - Obstacles
   - 
   - 
   - 

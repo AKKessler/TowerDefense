@@ -22,7 +22,7 @@ public class GridManager : MonoBehaviour {
         width = numColumns;
         showOverlay = false;
 
-        ground = transform.Find("Ground").gameObject;
+        ground = transform.parent.gameObject;
         ground.transform.localScale = new Vector3(numRows / 10.0f, 1.0f, numColumns / 10.0f);
         ground.transform.position = new Vector3(length / 2, 0, width / 2);
 
@@ -52,7 +52,8 @@ public class GridManager : MonoBehaviour {
         bool placed = grid.setObjectAt(building, row, col);
         if(placed)
         {
-            //WaypointUtility.updateCostMaps(grid);
+            building.transform.parent = transform;
+            AstarPath.active.UpdateGraphs(building.GetComponent<MeshRenderer>().bounds);
         }
         return placed;
     }
@@ -106,6 +107,5 @@ public class GridManager : MonoBehaviour {
             }
         }
         WaypointUtility.setWaypoints(waypoints.ToArray());
-        //WaypointUtility.updateCostMaps(grid);
     }
 }

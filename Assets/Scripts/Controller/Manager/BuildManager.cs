@@ -110,6 +110,7 @@ public class BuildManager
         {
             preview = Object.Instantiate(buildingPrefab, PREVIEW_OFFSET, Quaternion.identity) as GameObject;
             preview.name = "Preview";
+            preview.GetComponent<BoxCollider>().enabled = false;
             preview.GetComponent<NavMeshObstacle>().enabled = false;
             preview.transform.parent = gridManager.transform;
         }

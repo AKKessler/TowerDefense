@@ -74,7 +74,10 @@ public class Grid
             tile.setGameObject(gameObject);
         }
         float towerArea = building.length * building.width;
-        gameObject.transform.position = centerAverage / towerArea;
+        Vector3 newPosition = centerAverage / towerArea;
+        float yOffset = newPosition.y - gameObject.GetComponent<MeshRenderer>().bounds.min.y;
+        newPosition += Vector3.up * yOffset;
+        gameObject.transform.position = newPosition;
 
         return true;
     }

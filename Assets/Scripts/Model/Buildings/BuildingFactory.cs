@@ -6,6 +6,7 @@ public class BuildingFactory
     public readonly static GameObject WALL_2x2_PREFAB = (GameObject) Resources.Load("Prefabs/Wall2x2");
     public readonly static GameObject WALL_2x1_PREFAB = (GameObject) Resources.Load("Prefabs/Wall2x1");
     public readonly static GameObject WALL_1x2_PREFAB = (GameObject) Resources.Load("Prefabs/Wall1x2");
+    public readonly static GameObject BASIC_TOWER_PREFAB = (GameObject) Resources.Load("Prefabs/BasicTower");
 
     public static GameObject createBuilding(BuildingType type)
     {
@@ -38,7 +39,9 @@ public class BuildingFactory
             case BuildingType.Wall1x2:
                 prefab = WALL_1x2_PREFAB;
                 break;
-
+            case BuildingType.BasicTower:
+                prefab = BASIC_TOWER_PREFAB;
+                break;
         }
         return prefab;
     }

@@ -333,6 +333,85 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!1 &1250004937
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1250004941}
+  - 33: {fileID: 1250004940}
+  - 64: {fileID: 1250004939}
+  - 23: {fileID: 1250004938}
+  m_Layer: 0
+  m_Name: Lava
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &1250004938
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1250004937}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 2100000, guid: f16f6da5413a52b4c92a8a0301dcbf50, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 1
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedWireframeHidden: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!64 &1250004939
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1250004937}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &1250004940
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1250004937}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &1250004941
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1250004937}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8, y: -0.001, z: 8}
+  m_LocalScale: {x: 3.2, y: 1, z: 3.2}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
 --- !u!1 &1282006577
 GameObject:
   m_ObjectHideFlags: 0
@@ -361,7 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   astarData:
-    dataString: UEsDBBQAAAgIAACQn+vnhmhF+wEAAEYEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlU11v2kAQ/CvIz01ku0BJ31IItFLaoJCqz8t5jVec76z7KB8R/7135wO7zpPRzOzezO7ynoBukJlXMCSTr6Ps0yghLWs0itij2HF0YOpAK6iUqn4qdjiX2mgHL4FrdJSSxlcLB72PkmMsOMXv2X9HF/eLoTCoOtUsqu7S+ywKZ0FoBeNQN1hs6IydPpvGgmwaZEIWGBW+nknOSUcfiTk1nkjm0GjrUjhBQeByBQfpfe6ACmlXmWH5S1lqNNG9gtOClBtQ2zf5Jk3le9Wg962zv8Ctf2mS5cFV2/TnBz6ftK5LJevvt4dT/4ipiO1f4cRAm95c+/Ci856FCR2A72HL8U+F4pdcKWlF4cg3ZX2p1Zgveq1u4eYVsn2na80OQNt83GTWbfIS4h/nnOptGGXWAx6PpKPcQRsuwxYefBtUbl8/XIZwLDo2d6j39VvjG+z6VxWJJSltHBWbgjXymcR+pajoq6/4grR5ppra4foj8Qm30iqvTp7C3P1ArJlLJTDAMXeDArg5rd27ZngHA6738oBZAjPyuqbIXf9Hg5IAd/o0HVBrebgtfGep+P+ekvwL5NNxWWQIJXuA7R3m08mYzcaT9HNWTMtZEu6NhPMFfN02jnHcWkQXXLjb8h39UEcrBU048ULBYUXnWvZGRKKUG6YQxUvbIUS6/ANQSwMEFAAACAgAAJCf6zWwCr40AAAANwAAABIAJABncmFwaDBfZWRpdG9yLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQGrVsrJT85OTVGyUggpKk3VUVAqzsgvd60oKUoECrkl5hSDxAoyy/JLgHwl59S8ktQipVoAUEsDBBQAAAgIAACQn+vwvr1hbAAAAHkAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNazAEJDHQWl9KLEgoxioBCYU5qZAmJHKxmZJxqZmaSlGKYmpiVbJibpphqZmZokW5iYGhgbppilWSjFAtWXVBak+iXmpkL0BCSWZKRl5qVk5qXruRdlpriDjFaKrQUAUEsBAi0AFAAACAgAAJCf6+eGaEX7AQAARgQAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAAJCf6zWwCr40AAAANwAAABIAJAAAAAAAAAAAAAAASAIAAGdyYXBoMF9lZGl0b3IuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAACQn+vwvr1hbAAAAHkAAAAJACQAAAAAAAAAAAAAANACAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAMAAwAcAQAAhwMAAAAA
+    dataString: UEsDBBQAAAgIAACQn+tCXGLd/AEAAEgEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFlU8tu2zAQ/BVD5yaQVNt1ekvt2C2QNkacouc1tbIWpkiBj/oR+N9LUrSlKicKM7OP2V29J6AbZOYVDMnk6yj7NEpIyxqNIvYodhwdmDrQCiqlqp+KHc6lNtrBS+AaHaWk8dHCQe+j5BgDTvE9+3d0cV8MhUHVqWZRdZfeZ1E4C0IrGIe6wWJDZ+z02TQGZNMgE7LAqEjvJ76A5Jx07CQxp8ZTyRwabZ0PJygInLPQQxtRIe0qE33fwl/KUqOJ/Ss4LUi5EbV5k2/SVD5XDXrf9vYXuPWVJlke+mqT/vzA55O271LJ+vutcOqLmIrY/hVODLTpTbYPL7reszCjA/A9bDn+qVD8kislrSgc+aasD7Ua80Uv1c3cvEK273RtswPQNh93mXW7vAT7xzmnehtGmfWAxyPpKHfQhsuwhQefBpXb2A/nIZyLjskd6vv6rfENdv27isSSlDaOiknBGvlMYr9SVPTVV3xB2jxTTe1w/Zl4h1tplVcnT2HufiDWzKUSGODou0EB3JzWrq4Z3sGA61UeMEtgRl7XFLnrnzQICXCnT9MBtZaH28J3lor/7ynJv0A+HZdFhlCyB9jeYT6djNlsPEk/Z8W0nCXh3ki4voCv28TRjluL6IwLd1s+ox/qaKWgCSdeKDis6FzL3ohIlHLDFKJ4aTMES5d/UEsDBBQAAAgIAACQn+s1sAq+NAAAADcAAAASACQAZ3JhcGgwX2VkaXRvci5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1bKyU/OTk1RslIIKSpN1VFQKs7IL3etKClKBAq5JeYUg8QKMsvyS4B8JefUvJLUIqVaAFBLAwQUAAAICAAAkJ/r8L69YWwAAAB5AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDWswBCQx0FpfSixIKMYqAQmFOamQJiRysZmScamZmkpRimJqYlWyYm6aYamZmaJFuYmBoYG6aYpVkoxQLVl1QWpPol5qZC9AQklmSkZealZOal67kXZaa4g4xWiq0FAFBLAQItABQAAAgIAACQn+tCXGLd/AEAAEgEAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAACQn+s1sAq+NAAAADcAAAASACQAAAAAAAAAAAAAAEkCAABncmFwaDBfZWRpdG9yLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAkJ/r8L69YWwAAAB5AAAACQAkAAAAAAAAAAAAAADRAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAADAAMAHAEAAIgDAAAAAA==
     upgradeData: 
     data_backup: 
     file_cachedStartup: {fileID: 0}
@@ -426,7 +505,7 @@ MonoBehaviour:
   heuristic: 2
   heuristicScale: 1
   threadCount: 0
-  maxFrameTime: 1
+  maxFrameTime: 10
   minAreaSize: 0
   batchGraphUpdates: 0
   graphUpdateBatchingInterval: 0.2
@@ -495,7 +574,7 @@ MonoBehaviour:
   tileTexture: {fileID: 2800000, guid: 8399ec0182764ca4bb090bb3ee6f8198, type: 3}
   tileTextureAndOverlay: {fileID: 2800000, guid: 4e1fb36cc4f6b804086aa608d6e89e39,
     type: 3}
-  showOverlay: 1
+  showOverlay: 0
 --- !u!1 &1411465698
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,7 +583,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1411465699}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Creeps
   m_TagString: Untagged
   m_Icon: {fileID: 0}

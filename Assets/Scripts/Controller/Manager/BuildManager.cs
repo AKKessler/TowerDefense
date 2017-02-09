@@ -58,6 +58,9 @@ public class BuildManager
             else if (Input.GetKeyUp(KeyCode.Alpha4)) {
                 selectBuildingType(BuildingType.Wall1x2);
             }
+            else if (Input.GetKeyUp(KeyCode.Alpha5)) {
+                selectBuildingType(BuildingType.BasicTower);
+            }
         }
         else if (Input.GetMouseButtonUp(0)) {
             if(buildAtMouse())

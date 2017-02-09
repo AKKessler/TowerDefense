@@ -58,6 +58,9 @@ public class BuildManager
             else if (Input.GetKeyUp(KeyCode.Alpha4)) {
                 selectBuildingType(BuildingType.Wall1x2);
             }
+            else if (Input.GetKeyUp(KeyCode.Alpha5)) {
+                selectBuildingType(BuildingType.BasicTower);
+            }
         }
         else if (Input.GetMouseButtonUp(0)) {
             if(buildAtMouse())
@@ -111,7 +114,6 @@ public class BuildManager
             preview = Object.Instantiate(buildingPrefab, PREVIEW_OFFSET, Quaternion.identity) as GameObject;
             preview.name = "Preview";
             preview.GetComponent<BoxCollider>().enabled = false;
-            preview.GetComponent<NavMeshObstacle>().enabled = false;
             preview.transform.parent = gridManager.transform;
         }
     }
